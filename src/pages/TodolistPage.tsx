@@ -1,9 +1,39 @@
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import TaskInput from "../components/TaskInput";
+import TaskCard from "../components/TaskCard";
+import { type TaskCardProps } from "../libs/Todolist";
+import Footer from "../components/Footer";
 export default function TodolistPage() {
+  const title = "Todo List";
+  const tasks: TaskCardProps[] = [
+    {
+      id: "1",
+      title: "Read a book",
+      description: "Vite + React + Bootstrap + TS",
+      isDone: false,
+    },
+    {
+      id: "2",
+      title: "Write code",
+      description: "Finish project for class",
+      isDone: false,
+    },
+    {
+      id: "3",
+      title: "Deploy app",
+      description: "Push project to GitHub Pages",
+      isDone: true,
+    },
+  ];
+
   return (
     <div className="container-fluid min-vh-100">
       <div className="row h-100">
         {/* ── 2) Sidebar (รับ props userName, type) ─────────────────────────── */}
-        <div className="col-2 p-0">
+          <Sidebar username="Phichamon" type="student"/>
+
+        {/* <div className="col-2 p-0">
           <aside
             className="d-flex align-items-start flex-column p-4 bg-primary min-vh-100"
             style={{ width: "auto", height: "100%", overflowY: "auto" }}
@@ -47,30 +77,33 @@ export default function TodolistPage() {
               <p className="text-white">chanadda :admin</p>
             </div>
           </aside>
-        </div>
+        </div> */}
 
         <div className="col-10 p-0 d-flex flex-column min-vh-100">
           {/* ── 1) Header (ไม่รับ props) ────────────────────────────────────── */}
-          <header className="text-white bg-secondary p-2 w-100">
-            <p className="m-4">Note App</p>
-          </header>
+          <Header/>
 
           <main className="flex-grow-1 p-4">
             <div className="container">
-              <h2 className="text-center">Todo List</h2>
+              <h2 className="text-center">{title}</h2>
+              <p className="text-center text-muted">ทั้งหมด {tasks.length} งาน</p>
 
               {/* ── 3) TaskInput (ไม่รับ props) ──────────────────────────── */}
-              <div className="d-flex my-3">
-                <input
-                  className="form-control me-2"
-                  type="text"
-                  placeholder="Insert a task here.."
-                />
-                <button className="btn btn-primary px-4">Add</button>
-              </div>
+              <TaskInput/>
 
               {/* ── 4) Task (3 แถว) → แยกเป็น <TaskCard /> แล้ว .map() ─────── */}
-              <div className="card mb-3">
+              {
+                tasks.map((task) => (
+                  <TaskCard
+                    key={task.id}
+                    id={task.id}
+                    title={task.title}
+                    description={task.description}
+                    isDone={task.isDone}
+                  />
+                ))
+              }
+              {/* <div className="card mb-3">
                 <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-lg-4">
@@ -133,16 +166,12 @@ export default function TodolistPage() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div> */}
+            </div> 
           </main>
 
           {/* ── 5) Footer (รับ props year, fullName, studentId) ─────────────── */}
-          <footer className="text-center w-100">
-            <p className="text-white bg-secondary p-4 m-0">
-              Copyright © 2026 chanadda thanyaratthanon 6706200999
-            </p>
-          </footer>
+          <Footer year="2026" fullName="Phichamon  Kaewboot" studentId="690610700"/>
         </div>
       </div>
     </div>
